@@ -1,0 +1,181 @@
+---
+import ArrowNext from "./icons/ArrowNext.astro";
+import ArrowPrevious from "./icons/ArrowPrevious.astro";
+
+const images1 = ["Img11.webp", "Img12.webp", "Img13.webp", "Img14.webp"];
+---
+
+<div class="container mx-auto px-4 pb-40" id="caballeros">
+  <div class="items-center flex flex-wrap">
+    <div class="w-full md:w-4/12 ml-auto mr-auto px-4 relative">
+      <div
+        class="carousel-image1-container w-full h-64 md:h-96 overflow-hidden rounded-t-lg"
+      >
+        {
+          images1.map((image, index) => (
+            <img
+              src={image}
+              alt="Carousel image"
+              class={`carousel-image1 w-full h-full object-cover align-middle transition-transform duration-500 ease-out ${index === 0 ? "active" : "hidden"}`}
+            />
+          ))
+        }
+      </div>
+
+      <button
+        onclick="previousImage1()"
+        class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white text-[#e2b27b] px-4 py-2 rounded ml-6"
+      >
+        <ArrowPrevious />
+      </button>
+      <button
+        onclick="nextImage1()"
+        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white text-[#e2b27b] px-4 py-2 rounded mr-6"
+      >
+        <ArrowNext />
+      </button>
+    </div>
+
+    <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
+      <div class="md:pr-12">
+        <a
+          class="text-[#e2b27b] p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-[#e2b27b]"
+          href="#inicio"
+        >
+          <!-- <Terno /> -->
+        </a>
+        <h3 class="text-3xl font-semibold">Descubre Imbabura</h3>
+        <p class="mt-4 text-lg leading-relaxed text-gray-600">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui iusto voluptate corrupti sed in maxime nostrum. Nemo repellat assumenda quaerat minus, sapiente accusamus voluptates mollitia voluptatibus voluptatum atque, neque molestias.
+        </p>
+        <ul class="list-none mt-6">
+          <li class="py-2">
+            <div class="flex items-center">
+              <div>
+                <span
+                  class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#e2b27b] bg-[#edd4b8] mr-3"
+                >
+                  <i class="fas fa-fingerprint"></i>
+                </span>
+              </div>
+              <div>
+                <h4 class="text-gray-600">Oferta 1</h4>
+              </div>
+            </div>
+          </li>
+          <li class="py-2">
+            <div class="flex items-center">
+              <div>
+                <span
+                  class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#e2b27b] bg-[#edd4b8] mr-3"
+                >
+                  <i class="fab fa-html5"></i>
+                </span>
+              </div>
+              <div>
+                <h4 class="text-gray-600">Oferta 2</h4>
+              </div>
+            </div>
+          </li>
+          <li class="py-2">
+            <div class="flex items-center">
+              <div>
+                <span
+                  class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-[#e2b27b] bg-[#edd4b8] mr-3"
+                >
+                  <i class="far fa-paper-plane"></i>
+                </span>
+              </div>
+              <div>
+                <h4 class="text-gray-600">Oferta 3</h4>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script is:inline>
+  const images1 = document.querySelectorAll(".carousel-image1");
+  let currentIndex1 = 0;
+
+  function updateActiveImage1(newIndex) {
+    images1[currentIndex1].classList.remove("active", "fade-in");
+    images1[currentIndex1].classList.add("hidden"); // Oculta la imagen anterior
+
+    images1[newIndex].classList.remove("hidden"); // Muestra la nueva imagen
+    images1[newIndex].classList.add("active", "fade-in");
+    currentIndex1 = newIndex;
+  }
+
+  function nextImage1() {
+    const newIndex1 = (currentIndex1 + 1) % images1.length;
+    updateActiveImage1(newIndex1);
+  }
+
+  function previousImage1() {
+    const newIndex1 = (currentIndex1 - 1 + images1.length) % images1.length;
+    updateActiveImage1(newIndex1);
+  }
+
+  // Añade observador para carga diferida de imágenes cuando aparecen en pantalla
+  const observer1 = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("loaded");
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  images1.forEach((image) => observer1.observe(image));
+</script>
+
+<style>
+  .carousel-container {
+    overflow: hidden;
+  }
+
+  .carousel-image1-container {
+    position: relative;
+  }
+
+  .carousel-image1 {
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
+    opacity: 0;
+    display: none; /* Ocultamos la imagen por defecto */
+  }
+
+  .carousel-image1.active {
+    display: block; /* Solo la imagen activa se muestra */
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .carousel-image1.fade-in {
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .carousel-image1.loaded {
+    opacity: 1;
+    transition: opacity 0.1s ease;
+  }
+</style>

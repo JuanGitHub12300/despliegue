@@ -1,0 +1,148 @@
+---
+import ArrowNext from "./icons/ArrowNext.astro";
+import ArrowPrevious from "./icons/ArrowPrevious.astro";
+// interface Props {
+//   imagenes: string [];
+// }
+
+// const {imagenes} = Astro.props;
+
+const images = [
+  "Img.webp",
+  "Img3.webp",
+  "Img5.webp",
+  "Img6.webp",
+  "Img8.webp",
+  "Img9.webp",
+  "Img10.webp",
+  "Img15.webp",
+];
+---
+
+<div class="container w-full md:w-4/12 px-4 mr-auto ml-auto">
+  <div
+    class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-[#ff8040] overflow-hidden"
+  >
+    <div class="carousel-image-container w-full h-64 md:h-96 overflow-hidden">
+      {images.map((image, index)=>(
+        <img
+        src={image}
+        alt='Carousel image'
+        class={`carousel-image w-full h-full object-cover align-middle rounded-t-lg ${index ===0 ? "active" : "hidden"}`}
+      />
+      ))}
+    </div>
+    <div class="z-30">
+      <button
+    onclick="previousImage()"
+    class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white text-[#ff8040] px-4 py-2 rounded ml-6"
+  >
+    <ArrowPrevious />
+  </button>
+  <button
+    onclick="nextImage()"
+    class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white text-[#ff8040] px-4 py-2 rounded mr-6"
+  >
+    <ArrowNext />
+  </button>
+    </div>
+    
+    <blockquote class="relative p-8 mb-4">
+      <svg
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 583 95"
+        class="absolute left-0 w-full block"
+        style="height: 95px; top: -94px;"
+      >
+        <polygon
+          points="-30,95 583,95 583,65"
+          class="text-[#ff8040] fill-current"></polygon>
+      </svg>
+      <h4 class="text-xl font-bold text-white mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </h4>
+      <p class="text-md font-light mt-2 text-white">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta magnam est ratione porro non et veritatis provident accusamus optio repellendus vero esse veniam, dolorum assumenda ipsam tenetur ipsum, corrupti exercitationem.
+      </p>
+    </blockquote>
+  </div>
+
+  <script is:inline>
+    const images = document.querySelectorAll(".carousel-image");
+    let currentIndex = 0;
+    function updateActiveImage(newIndex) {
+      images[currentIndex].classList.remove("active", "fade-in");
+      images[currentIndex].classList.add("hidden");
+  
+      images[newIndex].classList.remove("hidden");
+      images[newIndex].classList.add("active", "fade-in");
+      currentIndex= newIndex;
+    }
+  
+    function nextImage() {
+      const newIndex = (currentIndex + 1) % images.length;
+      updateActiveImage(newIndex);
+    }
+  
+    function previousImage() {
+      const newIndex = (currentIndex - 1 + images.length) % images.length;
+      updateActiveImage(newIndex);
+    }
+  
+    const observer = new IntersectionObserver(
+      (entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add('loaded');
+          }
+        });
+      },
+      {threshold: 0.5}
+    );
+    images.forEach((image)=>{observer.observe(image)});
+  
+  </script>
+  
+  <style>
+    .carousel-container {
+      overflow: hidden;
+    }
+  
+    .carousel-image-container{
+      position: relative;
+    }
+    .carousel-image{
+      transition: opacity 0.1s ease,
+      transform 0.1s ease;
+      opacity: 0;
+      display: none;
+    }
+  
+    .carousel-image.active{
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    .carousel-image.fade-in{
+      animation: fadeIn 0.6s ease forwards;
+    }
+  
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      100%{
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  
+    .carousel-image.loaded {
+      opacity: 1;
+      transition: opacity 0.1s ease;
+    }
+  </style>
+  

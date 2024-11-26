@@ -1,0 +1,30 @@
+---
+// import Bestido from './icons/Bestido.astro';
+
+interface Props {
+  componente1?:any
+};
+const {componente1:Icono1} = Astro.props
+
+---
+<div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
+    <a
+      class="text-[#ff8040] p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-orange-100"
+      href="#inicio"
+      >
+    <!-- <Bestido></Bestido> -->
+    </a>
+    <h3 class="text-3xl mb-2 font-semibold leading-normal">
+      Paquetes turísticos
+    </h3>
+    <p
+      class="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700"
+    >
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur reprehenderit ab nobis fugiat natus animi numquam dolore ipsa. Accusantium temporibus magnam explicabo nisi aperiam libero consectetur repudiandae magni in quibusdam.
+    </p>
+    <p
+      class="text-lg font-light leading-relaxed mt-0 mb-4 text-gray-700"
+    >
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, libero. Eos pariatur eligendi est. Eum a dolore iste voluptates earum, aliquam odio tempora corrupti magni vel, molestias, molestiae adipisci iusto!
+    </p>
+  </div>

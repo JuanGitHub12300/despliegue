@@ -1,0 +1,14 @@
+---
+import ParejaCarrusel from "./ParejaCarrusel.astro"
+import Carrusel from "./Carrusel.astro"
+
+interface Props {
+    idMitad ?: string,
+    componente?:any,
+};
+const {idMitad, componente}=Astro.props;
+---
+<div class="flex flex-wrap items-center mt-32" id={idMitad}>
+    <ParejaCarrusel componente1={componente}></ParejaCarrusel>
+    <Carrusel></Carrusel>
+</div>
